@@ -105,7 +105,7 @@ process README {
         list_options += item + "\n"
     }
     """
-    echo "TractoFlow pipeline\n" >> readme.txt
+    echo "Registration-flow pipeline\n" >> readme.txt
     echo "Start time: $workflow.start\n" >> readme.txt
     echo "[Command-line]\n$workflow.commandLine\n" >> readme.txt
     echo "[Git Info]\n" >> readme.txt
