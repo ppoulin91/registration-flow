@@ -50,8 +50,6 @@ if (!params.template){
     error "Error ~ Please use --template for the template."
 }
 
-log.info "Input: $params.input"
-
 root = file(params.input)
 
 Channel.fromPath(file(params.template))
@@ -123,7 +121,7 @@ process Register_T1 {
 
     output:
     set sid, "${sid}__output0GenericAffine.mat"  into transformation_for_nii, transformation_for_trk
-    file "${sid}__t1_mni.nii.gz"
+    file "${sid}__t1_transformed.nii.gz"
     script:
     """
     antsRegistrationSyN.sh -d 3 -m ${t1} -f ${template} -n ${params.processes} -o "${sid}__output" -t a
@@ -143,7 +141,7 @@ process Transform_NII {
     set sid, file(nii), file(transfo), file(template) from nii_and_template_for_transformation
 
     output:
-    file "*_mni.nii.gz"
+    file "*_transformed.nii.gz"
 
     script:
     """
@@ -163,7 +161,7 @@ process Transform_TRK {
     set sid, file(trk), file(transfo), file(template) from trk_and_template_for_transformation
 
     output:
-    file "*_mni.trk"
+    file "*_transformed.trk"
 
     script:
     """
